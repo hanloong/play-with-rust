@@ -1,48 +1,55 @@
 fn main() {
-  for num in range(1i, 100) {
-    println!("{:d}", num);
+  for num in range(1i, 101) {
+    println!("{:s}",
+      if div_by_fifteen(num) { "fuzzbuzz".to_str() }
+      else if div_by_five(num) { "buzz".to_str() }
+      else if div_by_three(num) { "fuzz".to_str() }
+      else { num.to_str() }
+    );
   }
 }
 
 fn div_by_three(num: int) -> bool {
-  num % 3 == 0
+  div_by(3, num)
 }
 
 fn div_by_five(num: int) -> bool {
-  num % 5 == 0
+  div_by(5, num)
+}
+
+fn div_by_fifteen(num: int) -> bool {
+  div_by(15, num)
+}
+
+fn div_by(by: int, num: int) -> bool {
+  num % by == 0
 }
 
 #[test]
-fn test_number() {
-  if get_word(1) != "1" {
-    fail!("Should return 1");
-  }
+fn test_div_by_fifteen() {
+  assert!(!div_by_fifteen(1))
 }
 
+#[test]
+fn test_div_by_fifteen_with_fifteen() {
+  assert!(div_by_fifteen(15))
+}
 #[test]
 fn test_div_by_three() {
-  if div_by_three(1) {
-    fail!("One is not divisble by three");
-  }
+  assert!(!div_by_three(1))
 }
 
 #[test]
-fn test_div_by_three_with_one() {
-  if !div_by_three(3) {
-    fail!("Three is not divisble by three");
-  }
+fn test_div_by_three_with_three() {
+  assert!(div_by_three(3))
 }
 
 #[test]
 fn test_div_by_five() {
-  if div_by_five(1) {
-    fail!("One is not divisible by five")
-  }
+  assert!(!div_by_five(1))
 }
 
 #[test]
 fn test_div_by_five_with_five() {
-  if !div_by_five(5) {
-    fail!("Five is divisible by five")
-  }
+  assert!(div_by_five(5))
 }
